@@ -9,5 +9,6 @@ router.post("/uploadFile", filesController.postUploadFile);
 
 router.get("/getFiles", filesController.getFiles);
 router.get("/getFiles/:Id", filesController.getFile);
+router.get("/readFiles/:Id", filesController.readFile);
 
 exports.router = router;

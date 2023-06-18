@@ -1,5 +1,6 @@
-const fs = require("fs");
 const path = require("path");
+const { readFileSync } = require("fs");
+const PDFParser = require("pdf-parse");
 
 const filesPDF = require("../model/filesPDF");
 
@@ -52,7 +53,7 @@ exports.getFile = (req, res, next) => {
     .findByPk(fileId)
     .then((result) => {
       const item = result.dataValues;
-      console.log(item);
+
       const filepath = path.join(item.Filepath);
 
       fs.readFile(filepath, (err, data) => {
@@ -62,6 +63,36 @@ exports.getFile = (req, res, next) => {
         res.setHeader("Content-Type", "application/pdf");
         res.send(data);
       });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
+
+exports.readFile = (req, res, next) => {
+  const fileId = req.params.Id;
+
+  filesPDF
+    .findByPk(fileId)
+    .then((result) => {
+      const item = result.dataValues;
+      const filepath = path.join(item.Filepath);
+
+      // Read the PDF file synchronously
+      const pdfData = readFileSync(filepath);
+
+      // Parse the PDF data
+      PDFParser(pdfData)
+        .then((data) => {
+          const textContent = data.text;
+          console.log(`Text: ${textContent}`);
+          // Process the extracted text content as required
+        })
+        .catch((error) => {
+          console.error("Error parsing PDF:", error);
+        });
+
+      res.redirect("/getFiles");
     })
     .catch((err) => {
       console.log(err);
