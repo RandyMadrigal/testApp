@@ -1,0 +1,21 @@
+<main>
+  <div class="container-fluid center top">
+        <div class="row g-2">
+  {{#if hasItems}}
+    {{#each Item}}
+          <div class="col-4">
+            <div class="card cardWidth">
+              <div class="card-body">
+                <h5 class="card-title">{{this.Titulo}} </h5>
+                <a href="/getFiles/{{this.Id}}" target="_blank" class="btn btn-primary">more</a>
+                <a href="/readFiles/{{this.Id}}" class="btn btn-primary">Read</a>
+              </div>
+            </div>
+          </div>
+    {{/each}}
+    </div>
+    </div>
+  {{else}}
+    <h2>Aqui no hay nada...</h2>
+  {{/if}}
+</main>

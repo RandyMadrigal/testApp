@@ -1,5 +1,6 @@
 const path = require("path");
 const { readFileSync } = require("fs");
+const fs = require("fs");
 const PDFParser = require("pdf-parse");
 
 const filesPDF = require("../model/filesPDF");
